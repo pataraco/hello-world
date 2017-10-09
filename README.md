@@ -1,4 +1,8 @@
 # hello-world
-Learning GitHub
 
-I am the best README file editor!
+This is my repo for all those "Hello World!" learning projects
+
+## Applications Included
+
+* GitHub
+* Jenkins
