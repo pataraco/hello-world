@@ -13,7 +13,7 @@ pipeline {
                     uname -a
                     date
                 '''
-                sh 'python --version'
+                /* sh 'python --version' */ /* python not found in Alpine docker image */
             }
         }
         stage('test') {
