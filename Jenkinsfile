@@ -32,8 +32,6 @@ pipeline {
             echo "All done!  8)"
             /* collect test results and artifacts */
             archive 'build/libs/**/*.jar'  /* grab built artifacts for local analysis/investigation */
-            /* grab test results and let Jenkins track them */
-            /* junit 'build/reports/**/*.xml' */
             mail to: 'patrick.raco@comtechtel.com',
                 subject: "Jenkins: Executed Pipeline: ${currentBuild.fullDisplayName}",
                 body: "Pipeline all done: ${env.BUILD_URL}"
