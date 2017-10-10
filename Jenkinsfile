@@ -2,7 +2,8 @@ pipeline {
     /* agent { docker 'python:3.5.1' } */
     /* agent any */
     agent {
-        docker { image 'node:7-alpine' }
+        /* docker { image 'node:7-alpine' } */
+        docker { image 'node:alpine' }
     }
     stages {
         stage('build') {
