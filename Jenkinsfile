@@ -28,7 +28,7 @@ pipeline {
         }
     }
     post {
-        always {
+        always {    /* this will always run */
             echo "All done!  8)"
             /* collect test results and artifacts */
             archive 'build/libs/**/*.jar'  /* grab built artifacts for local analysis/investigation */
@@ -37,16 +37,16 @@ pipeline {
                 subject: 'Jenkins: Executed Pipeline: ${currentBuild.fullDisplayName}',
                 body: 'Pipeline all done: ${env.BUILD_URL}'
         }
-        success {
+        success {    /* runs when successful */
             echo "Pipeline succeeded!  :)"
         }
-        unstable {
+        unstable {    /*  runs when marked as unstable */
             echo "Pipeline is unstable.  :/"
         }
-        failure {
+        failure {    /* runs if failed */
             echo "Pipeline failed!  :("
         }
-        changed {
+        changed {    /* runs if state of Pipeline has changed, e.g. previously failed, but now succeeded */
             echo "Pipeline status changed.  :|"
         }
     }
