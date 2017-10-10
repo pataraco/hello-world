@@ -14,6 +14,10 @@ pipeline {
                     date
                 '''
                 /* sh 'python --version' */ /* python not found in Alpine docker image */
+                environment {
+                    ATONG_PUB_SSH = credentials('ATONG_PUB_SSH')
+                }
+                sh 'echo "$ATONG_PUB_SSH"'
             }
         }
         stage('test') {
