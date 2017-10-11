@@ -51,7 +51,7 @@ pipeline {
         failure {    /* runs if failed */
             echo "Pipeline failed!  :("
             hipchatSend room: 'VMedix Staging',
-                message: "@here; Jenkins - Executed Pipeline - Job Name: ${env.JOB_NAME} - Job No. #${env.BUILD_NUMBER} failed",
+                message: "Jenkins - Executed Pipeline - Job Name: ${env.JOB_NAME} - Job No. #${env.BUILD_NUMBER} failed",
                 color: 'RED'
         }
         changed {    /* runs if state of Pipeline has changed, e.g. previously failed, but now succeeded */
