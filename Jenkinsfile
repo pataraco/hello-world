@@ -42,7 +42,7 @@ pipeline {
                 subject: "Jenkins: Executed Pipeline [SUCCESS]: ${currentBuild.fullDisplayName}",
                 body: "Pipeline all done: ${env.BUILD_URL}\nStatus: Succeeded\n"
             hipchatSend room: 'VMedix Staging',
-                message: "Executed Pipeline: ${currentBuild.fullDisplayName} succeeded",
+                message: "Executed Pipeline [SUCCESS]: ${currentBuild.fullDisplayName}",
                 color: 'GREEN'
         }
         unstable {    /*  runs when marked as unstable */
@@ -54,7 +54,7 @@ pipeline {
                 subject: "Jenkins: Executed Pipeline [FAILED]: ${currentBuild.fullDisplayName}",
                 body: "Pipeline all done: ${env.BUILD_URL}\nStatus: Failed\n"
             hipchatSend room: 'VMedix Staging',
-                message: "Executed Pipeline - Job Name: ${env.JOB_NAME} - Job No. #${env.BUILD_NUMBER} failed",
+                message: "Executed Pipeline [FAILED] - Job Name: ${env.JOB_NAME} - Job No. #${env.BUILD_NUMBER}",
                 color: 'RED'
         }
         changed {    /* runs if state of Pipeline has changed, e.g. previously failed, but now succeeded */
