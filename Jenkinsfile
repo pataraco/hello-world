@@ -38,8 +38,7 @@ pipeline {
         }
         success {    /* runs when successful */
             echo "Pipeline succeeded!  :)"
-            hipchatSend channel: 'VMedix Staging',
-                token: "credentials('HIPCHAT_TOKEN')",
+            hipchatSend room: 'VMedix Staging',
                 message: "@here; Jenkins - Executed Pipeline: ${currentBuild.fullDisplayName} Job Name: ${env.JOB_NAME} Job No. #${env.BUILD_NUMBER} succeeded",
                 color: 'GREEN'
         }
@@ -48,9 +47,7 @@ pipeline {
         }
         failure {    /* runs if failed */
             echo "Pipeline failed!  :("
-            hipchatSend
-                channel: 'VMedix Staging',
-                token: "credentials('HIPCHAT_TOKEN')",
+            hipchatSend room: 'VMedix Staging',
                 message: "@here; Jenkins - Executed Pipeline: ${currentBuild.fullDisplayName} Job Name: ${env.JOB_NAME} Job No. #${env.BUILD_NUMBER} failed",
                 color: 'RED'
         }
