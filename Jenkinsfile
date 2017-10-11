@@ -40,10 +40,7 @@ pipeline {
             echo "Pipeline succeeded!  :)"
             mail to: 'patrick.raco@comtechtel.com',
                 subject: "Jenkins: Executed Pipeline [SUCCESS]: ${currentBuild.fullDisplayName}",
-                body: "
-                    Pipeline all done: ${env.BUILD_URL}
-                    Status: Succeeded
-                "
+                body: "Pipeline all done: ${env.BUILD_URL}\nStatus: Succeeded\n"
             hipchatSend room: 'VMedix Staging',
                 message: "Executed Pipeline: ${currentBuild.fullDisplayName} succeeded",
                 color: 'GREEN'
@@ -55,10 +52,7 @@ pipeline {
             echo "Pipeline failed!  :("
             mail to: 'patrick.raco@comtechtel.com',
                 subject: "Jenkins: Executed Pipeline [FAILED]: ${currentBuild.fullDisplayName}",
-                body: "
-                    Pipeline all done: ${env.BUILD_URL}
-                    Status: Failed
-                "
+                body: "Pipeline all done: ${env.BUILD_URL}\nStatus: Failed\n"
             hipchatSend room: 'VMedix Staging',
                 message: "Executed Pipeline - Job Name: ${env.JOB_NAME} - Job No. #${env.BUILD_NUMBER} failed",
                 color: 'RED'
