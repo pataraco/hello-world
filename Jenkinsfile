@@ -32,17 +32,20 @@ pipeline {
             echo "All done!  8)"
             /* collect test results and artifacts */
             archive 'build/libs/**/*.jar'  /* grab built artifacts for local analysis/investigation */
-            mail to: 'patrick.raco@comtechtel.com',
-                subject: "Jenkins: Executed Pipeline: ${currentBuild.fullDisplayName}",
-                body: "Pipeline all done: ${env.BUILD_URL}"
-            hipchatSend room: 'Announcements',
-                message: "Jenkins - Raco is messing with Jenkins and every time his Pipeline runs it will display a message here because this room doesn't have enough announcements",
+            hipchatSend room: 'VMedix Staging',
+                message: "Pipeline run completed: ${currentBuild.fullDisplayName}",
                 color: 'PURPLE'
         }
         success {    /* runs when successful */
             echo "Pipeline succeeded!  :)"
+            mail to: 'patrick.raco@comtechtel.com',
+                subject: "Jenkins: Executed Pipeline [SUCCESS]: ${currentBuild.fullDisplayName}",
+                body: "
+                    Pipeline all done: ${env.BUILD_URL}
+                    Status: Succeeded
+                "
             hipchatSend room: 'VMedix Staging',
-                message: "Jenkins - Executed Pipeline: ${currentBuild.fullDisplayName} succeeded",
+                message: "Executed Pipeline: ${currentBuild.fullDisplayName} succeeded",
                 color: 'GREEN'
         }
         unstable {    /*  runs when marked as unstable */
@@ -50,8 +53,14 @@ pipeline {
         }
         failure {    /* runs if failed */
             echo "Pipeline failed!  :("
+            mail to: 'patrick.raco@comtechtel.com',
+                subject: "Jenkins: Executed Pipeline [FAILED]: ${currentBuild.fullDisplayName}",
+                body: "
+                    Pipeline all done: ${env.BUILD_URL}
+                    Status: Failed
+                "
             hipchatSend room: 'VMedix Staging',
-                message: "Jenkins - Executed Pipeline - Job Name: ${env.JOB_NAME} - Job No. #${env.BUILD_NUMBER} failed",
+                message: "Executed Pipeline - Job Name: ${env.JOB_NAME} - Job No. #${env.BUILD_NUMBER} failed",
                 color: 'RED'
         }
         changed {    /* runs if state of Pipeline has changed, e.g. previously failed, but now succeeded */
