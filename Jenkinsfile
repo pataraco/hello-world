@@ -32,18 +32,29 @@ pipeline {
             echo "All done!  8)"
             /* collect test results and artifacts */
             archive 'build/libs/**/*.jar'  /* grab built artifacts for local analysis/investigation */
-            mail to: 'patrick.raco@comtechtel.com',
+            mail
+                to: 'patrick.raco@comtechtel.com',
                 subject: "Jenkins: Executed Pipeline: ${currentBuild.fullDisplayName}",
                 body: "Pipeline all done: ${env.BUILD_URL}"
         }
         success {    /* runs when successful */
             echo "Pipeline succeeded!  :)"
+            hipchatSend
+                channel: 'VMedix Staging',
+                token: "credentials('HIPCHAT_TOKEN')",
+                message: "@here; Jenkins - Executed Pipeline: ${currentBuild.fullDisplayName} Job Name: ${env.JOB_NAME} Job No. #${env.BUILD_NUMBER} succeeded",
+                color: 'GREEN'
         }
         unstable {    /*  runs when marked as unstable */
             echo "Pipeline is unstable.  :/"
         }
         failure {    /* runs if failed */
             echo "Pipeline failed!  :("
+            hipchatSend
+                channel: 'VMedix Staging',
+                token: "credentials('HIPCHAT_TOKEN')",
+                message: "@here; Jenkins - Executed Pipeline: ${currentBuild.fullDisplayName} Job Name: ${env.JOB_NAME} Job No. #${env.BUILD_NUMBER} failed",
+                color: 'RED'
         }
         changed {    /* runs if state of Pipeline has changed, e.g. previously failed, but now succeeded */
             echo "Pipeline status changed.  :|"
