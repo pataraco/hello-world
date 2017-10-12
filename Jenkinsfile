@@ -11,6 +11,7 @@ pipeline {
                 ATONG_PUB_SSH = credentials('ATONG_PUB_SSH')
             }
             steps {
+                echo 'Building...'
                 sh 'echo "Hello World!"'
                 sh '''
                     uname -a
@@ -23,7 +24,23 @@ pipeline {
         }
         stage('test') {
             steps {
+                echo 'Testing...'
                 sh 'node --version'
+            }
+        }
+        stage('deploy (staging)') {
+            steps {
+                echo 'Deploying Staging...'
+            }
+        }
+        stage('sanity check') {
+            steps {
+                input "Did QA sign off on Staging?"
+            }
+        }
+        stage('deploy (production)') {
+            steps {
+                echo 'Deploying Production...'
             }
         }
     }
