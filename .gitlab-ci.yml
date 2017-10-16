@@ -1,0 +1,11 @@
+---
+before_script:
+  - uname -a 
+
+date:
+  script:
+    - date
+
+uptime:
+  script:
+    - uptime
