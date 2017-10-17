@@ -1,11 +1,46 @@
 ---
-before_script:
-  - uname -a 
+# some reserved keywords which cannot be used as job names
+#
+# image           use docker image
+# services        use docker services
+# stges           define build stages
+# types           alias for stages (deprecated)
+# before_script   define commands that run before each job's script
+# after_script    define commands that run after each job's script
+# variables      define build variables
+# cache           define list of files that should be cached between subsequent runs
+#
 
-show_date:
+variables:
+  WEB_URL: "www.example.com"
+
+stages:
+  - build
+  - test
+  - deploy
+
+before_script:
+  - date
+
+build:
+  type: build
   script:
-    - date
+    - echo "Building ($WEB_URL)..."
+
+show_system:
+  type: test
+  script:
+    - uname -a
 
 show_uptime:
+  type: test
   script:
     - uptime
+
+deploy:
+  type: deploy
+  script:
+    - echo "Deploying ($WEB_URL)..."
+
+after_script:
+  - date
