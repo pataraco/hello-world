@@ -1,5 +1,7 @@
 ---
-# some reserved keywords which cannot be used as job names
+# some top-level reserved keywords which cannot be used as job names
+#
+# skipping? "place [ci skip] or [skip ci] in commit message
 #
 # image           use docker image
 # services        use docker services
@@ -7,9 +9,43 @@
 # types           alias for stages (deprecated)
 # before_script   define commands that run before each job's script
 # after_script    define commands that run after each job's script
-# variables      define build variables
+# variables       define build variables
 # cache           define list of files that should be cached between subsequent runs
 #
+# some job keywords
+# -----------------
+# script         (REQUIRED) Defines a shell script which is executed by Runner
+# image          Use docker image, covered in Using Docker Images
+# services       Use docker services, covered in Using Docker Images
+# stage          Defines a job stage (default: test)
+# type           Alias for stage
+# variables      Define job variables on a job level
+# only           Defines a list of git refs for which job is created
+# except         Defines a list of git refs for which job is not created
+#
+#    only/except keywords
+#    --------------------
+#    branches   When a branch is pushed.
+#    tags       When a tag is pushed.
+#    api        When pipeline has been triggered by a second pipelines API (not triggers API).
+#    external   When using CI services other than GitLab.
+#    pipelines  For multi-project triggers, created using the API with CI_JOB_TOKEN.
+#    pushes     Pipeline is triggered by a git push by the user.
+#    schedules  For scheduled pipelines.
+#    triggers   For pipelines created using a trigger token.
+#    web        For pipelines created using Run pipeline button in GitLab UI (under your project's Pipelines).
+#
+# tags           Defines a list of tags which are used to select Runner
+# allow_failure  Allow job to fail. Failed job doesn't contribute to commit status
+# when           Define when to run job. Can be on_success, on_failure, always or manual
+# dependencies   Define other jobs that a job depends on so that you can pass artifacts between them
+# artifacts      Define list of job artifacts
+# cache          Define list of files that should be cached between subsequent runs
+# before_script  Override a set of commands that are executed before job
+# after_script   Override a set of commands that are executed after job
+# environment    Defines a name of environment to which deployment is done by this job
+# coverage       Define code coverage settings for a given job
+# retry          Define how many times a job can be auto-retried in case of a failure
 
 variables:
   WEB_URL: "www.example.com"
@@ -44,3 +80,4 @@ deploy:
 
 after_script:
   - date
+...
