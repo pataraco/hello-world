@@ -62,6 +62,7 @@ build:
   type: build
   script:
     - echo "Building ($WEB_URL)..."
+    - df -h
 
 show_system:
   type: test
@@ -77,6 +78,7 @@ deploy:
   type: deploy
   script:
     - echo "Deploying ($WEB_URL)..."
+    - ps -f
 
 after_script:
   - date
