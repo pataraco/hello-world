@@ -74,6 +74,11 @@ show_uptime:
   script:
     - uptime
 
+show_memory:
+  type: test
+  script:
+    - free
+
 deploy:
   type: deploy
   script:
