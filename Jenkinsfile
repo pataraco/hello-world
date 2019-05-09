@@ -25,7 +25,11 @@ pipeline {
         stage('test') {
             steps {
                 echo 'Testing...'
-                sh 'node --version'
+                timeout(time: 3, unit: 'MINUTES') {
+                    retry(5) {
+                        sh 'node --version'
+                    }
+                }
             }
         }
         stage('deploy (staging)') {
@@ -49,16 +53,16 @@ pipeline {
             echo "All done!  8)"
             /* collect test results and artifacts */
             archive 'build/libs/**/*.jar'  /* grab built artifacts for local analysis/investigation */
-            hipchatSend room: 'VMedix Staging',
+            hipchatSend room: 'Project Staging',
                 message: "Pipeline run completed: ${currentBuild.fullDisplayName}",
                 color: 'PURPLE'
         }
         success {    /* runs when successful */
             echo "Pipeline succeeded!  :)"
-            mail to: 'patrick.raco@comtechtel.com',
+            mail to: 'username@example.com',
                 subject: "Jenkins: Executed Pipeline [SUCCESS]: ${currentBuild.fullDisplayName}",
                 body: "Pipeline all done: ${env.BUILD_URL}\nStatus: Succeeded\n"
-            hipchatSend room: 'VMedix Staging',
+            hipchatSend room: 'Project Staging',
                 message: "Executed Pipeline [SUCCESS]: ${currentBuild.fullDisplayName}",
                 color: 'GREEN'
         }
@@ -67,10 +71,10 @@ pipeline {
         }
         failure {    /* runs if failed */
             echo "Pipeline failed!  :("
-            mail to: 'patrick.raco@comtechtel.com',
+            mail to: 'username@example.com',
                 subject: "Jenkins: Executed Pipeline [FAILED]: ${currentBuild.fullDisplayName}",
                 body: "Pipeline all done: ${env.BUILD_URL}\nStatus: Failed\n"
-            hipchatSend room: 'VMedix Staging',
+            hipchatSend room: 'Project Staging',
                 message: "Executed Pipeline [FAILED] - Job Name: ${env.JOB_NAME} - Job No. #${env.BUILD_NUMBER}",
                 color: 'RED'
         }
